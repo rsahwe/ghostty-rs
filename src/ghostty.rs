@@ -7,13 +7,15 @@ use std::{
     },
 };
 
-use ghostty_sys::{
+use sys::{
     ghostty_build_mode_e, ghostty_build_mode_e_GHOSTTY_BUILD_MODE_DEBUG,
     ghostty_build_mode_e_GHOSTTY_BUILD_MODE_RELEASE_FAST,
     ghostty_build_mode_e_GHOSTTY_BUILD_MODE_RELEASE_SAFE,
-    ghostty_build_mode_e_GHOSTTY_BUILD_MODE_RELEASE_SMALL, ghostty_cli_main, ghostty_info,
-    ghostty_info_s, ghostty_init,
+    ghostty_build_mode_e_GHOSTTY_BUILD_MODE_RELEASE_SMALL, ghostty_cli_main, ghostty_config_new,
+    ghostty_info, ghostty_info_s, ghostty_init,
 };
+
+use crate::config::Config;
 
 // Main type from which more functions can be called. Create with init().
 #[derive(Debug)]
@@ -68,7 +70,20 @@ pub fn cli_main(mut args: Vec<String>) -> ! {
     unreachable!()
 }
 
-impl Ghostty {}
+impl Ghostty {
+    pub fn create_config(&self) -> Config {
+        unsafe { Config::from_raw(ghostty_config_new()) }
+    }
+
+    pub fn load_config(&self) -> Config {
+        let mut config = self.create_config();
+        config
+            .load_default_files()
+            .load_cli_args()
+            .load_recursive_files();
+        config
+    }
+}
 
 impl Info {
     // Should be safe

@@ -7,4 +7,5 @@ pub extern crate ghostty_sys as sys;
 #[cfg(test)]
 pub mod tests;
 
+pub mod config;
 pub mod ghostty;

@@ -10,12 +10,16 @@ libghostty uses zig and therefore requires the zig compiler.
 
 I could not get static compilation to work so the dynamic library has to be included in the final result.
 
-There are three release modes, fast, small and safe. safe is enabled by default but can be overriden without disabling the default features.
-
 ## Completion
 
 - [x] Startup and build info
 - [ ] Config
+  - [x] Creation
+  - [x] Loading
+  - [x] Fields also used by swift frontend
+  - [ ] Other potential fields
+  - [x] Diagnostics
+  - [ ] Input triggers
 - [ ] App
 - [ ] Surface
 - [ ] Inspector
